@@ -1,6 +1,9 @@
-<html>
+<!doctype html><html lang="en-US" dir="ltr" gl="US">
+<head>
+<meta charset="utf-8">
+</head>
 <body>
-	<h2>You dropped a slash.</h2>
+	<h2><a id='msg'>You dropped a slash.</a></h2>
 	<p>
 	 <video width="854" height="480" autoplay muted controls>
 	   <source src="index.mp4" type="video/mp4">
@@ -9,5 +12,32 @@
 	<p>&nbsp;</p>
 	<p>&nbsp;</p>
 	</p><small><a href="https://ramstetter.com">Rick</a></small></p>
+<script type="application/javascript">
+function param( name ) {
+    name = name.replace(/[\[]/,"\\\[").replace(/[\]]/,"\\\]");
+    var regexS = "[\\?&]"+name+"=([^&#]*)";
+    var regex = new RegExp( regexS );
+    var results = regex.exec( location.href );
+    return results == null ? null : results[1];
+}
+var msg = document.getElementById('msg');
+var req = param('req');
+var base = null
+if (-1 != location.href.search('orggithub.com')) {
+	base = 'https://godoc.org/github.com/';
+} else if (-1 != location.href.search('orggitlab.com')) {
+	base = 'https://godoc.org/gitlab.com/';
+} else if (-1 != location.href.search('devgithub.com')) {
+	base = 'https://pkg.go.dev/github.com/';
+} else if (-1 != location.href.search('devgitlab.com')) {
+	base = 'https://pkg.go.dev/gitlab.com/';
+} else if ( -1 != location.href.search('home')) {
+	base = 'https://example.com/';
+}
+if (req && base) {
+  msg.href = base.concat(req)
+}
+</script>
+
 </body>
 </html>
